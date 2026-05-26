@@ -22,8 +22,8 @@ Core tables:
 | `individual_role_lookup` | role code | `role_k1500`, `role_k150`, `role_k50`, `job_category`, `onet_code`, `onet_title` |
 | `individual_user_skill_lookup` | skill code | `skill_mapped`, `skill_k25`, `skill_k50`, `skill_k75` |
 
-Sensitive fields:
+Sensitive fields and QA:
 
-- Avoid exporting `fullname`, `profile_linkedin_url`, raw person-level locations, or row-level combinations that could identify individuals.
+- `fullname`, `profile_linkedin_url`, and raw person-level location fields are legitimate for secure internal QA, manual spot-checking, and entity validation.
+- Do not commit, publish, or externally share files containing those fields or row-level combinations that could identify individuals.
 - Aggregate externally shared outputs to safe cell sizes.
-
