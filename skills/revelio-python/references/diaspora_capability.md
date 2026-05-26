@@ -34,6 +34,20 @@ Signal hierarchy:
 | Education in HOME_COUNTRY | `individual_user_education.university_country` | Recovers people who studied in HOME_COUNTRY but left before working there | International students can be misclassified as origin-connected if they studied in HOME_COUNTRY but were never from there. |
 | Profile location | `individual_user.user_country` | Useful for current/most-recent location checks | Profile country can be stale, vague, or reflect where someone lives while working remotely for an employer elsewhere. It should not define origin by itself. |
 
+Broadest first-layer catchment:
+
+```text
+home_connected_first_pass =
+  any job spell in HOME_COUNTRY
+  OR any education spell in HOME_COUNTRY
+```
+
+This first pass should be described as `HOME_COUNTRY-connected profiles` or `diaspora-relevant catchment`, not as confirmed diaspora. It is intentionally broad: later analysis should separate current diaspora, returnees, stayers, one-way emigrants, foreign students, expatriates, remote-worker ambiguities, and unknown-location cases.
+
+Optional weak signal:
+
+- Add `profile_country == HOME_COUNTRY` only if the goal is a maximally inclusive discovery pull or current-location validation. Do not use profile country alone as origin evidence.
+
 Decision checkpoint:
 
 - Jobs only: cleaner evidence of labor-market connection, but misses people who leave before their first observed job.
@@ -195,4 +209,3 @@ Before finalizing:
 - Destination country distribution with small-cell rules.
 - Capability coverage: roles, skills, sectors, education.
 - Robustness to origin definition and recency/tenure thresholds.
-
