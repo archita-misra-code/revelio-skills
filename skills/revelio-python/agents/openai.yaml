@@ -1,0 +1,4 @@
+display_name: Revelio Python
+short_description: Safe Python workflows for Revelio Labs WRDS data.
+default_prompt: Use this skill to query, clean, analyze, and visualize Revelio Labs data in Python while protecting credentials and licensed data.
+

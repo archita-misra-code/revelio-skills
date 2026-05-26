@@ -1,0 +1,51 @@
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
+
+# Local environments
+.venv/
+venv/
+.env
+.env.*
+.Renviron
+.Rprofile
+.Rhistory
+.RData
+__pycache__/
+*.py[cod]
+
+# Data and extracts
+data/
+raw/
+clean/
+outputs/
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.parquet
+*.feather
+*.pkl
+*.pickle
+*.rds
+*.RDS
+*.RData
+*.sqlite
+*.db
+
+# Notebooks and rendered reports
+*.ipynb
+*.html
+*.pdf
+*.docx
+*_files/
+
+# Credentials and secrets
+*credential*
+*credentials*
+*secret*
+*password*
+*.pem
+*.key
+

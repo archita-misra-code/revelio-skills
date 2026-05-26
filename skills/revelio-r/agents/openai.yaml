@@ -1,0 +1,4 @@
+display_name: Revelio R
+short_description: Safe R workflows for Revelio Labs WRDS data.
+default_prompt: Use this skill to query, clean, analyze, and visualize Revelio Labs data in R while protecting credentials and licensed data.
+
