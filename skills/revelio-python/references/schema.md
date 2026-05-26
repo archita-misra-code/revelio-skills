@@ -9,18 +9,32 @@ Core identifiers:
 | `rcid` | Employer identifier |
 | `ultimate_parent_rcid` | Parent employer identifier |
 | `rsid` | School identifier |
+| `job_id` | Job posting identifier |
+| `review_id` | Sentiment review identifier |
 
 Core tables:
 
 | Table | Grain | Common columns |
 |---|---|---|
 | `individual_user` | user | `user_id`, `user_country`, `highest_degree`, `sex_predicted`, `f_prob`, `m_prob`, `updated_dt` |
-| `individual_positions` | job spell | `user_id`, `position_id`, `rcid`, `country`, `startdate`, `enddate`, `role_k1500`, `seniority`, `salary`, `position_number` |
+| `individual_positions` | job spell | `user_id`, `position_id`, `rcid`, `country`, `region`, `state`, `metro_area`, `city`, `startdate`, `enddate`, `role_k1500_v2`, `role_k17000_v3`, `onet_code`, `seniority`, `salary`, `position_number`, `company`, `ultimate_parent_company_name` |
 | `individual_user_education` | education spell | `user_id`, `rsid`, `university_name`, `university_country`, `degree`, `field`, `startdate`, `enddate` |
-| `individual_user_skills` | user-skill | `user_id`, `skill_raw`, `skill_mapped`, `skill_source` |
-| `company_mapping` | company/subsidiary | `rcid`, `company`, `ultimate_parent_rcid`, `ultimate_parent_company_name`, `naics_code`, `hq_country`, `rics_k50` |
-| `individual_role_lookup` | role code | `role_k1500`, `role_k150`, `role_k50`, `job_category`, `onet_code`, `onet_title` |
-| `individual_user_skill_lookup` | skill code | `skill_mapped`, `skill_k25`, `skill_k50`, `skill_k75` |
+| `individual_user_skills` | user-skill | `user_id`, `skill_raw`, `skill_translated`, `skill_source`, `first_reported`, `skill_k35000` |
+| `company_mapping` | company/subsidiary | `rcid`, `company`, `ultimate_parent_rcid`, `ultimate_parent_company_name`, `naics_code`, `hq_country`, `hq_region`, `rics_k50`, `rics_k200`, `rics_k400` |
+| `individual_role_lookup_v3` | role code | role clusters including `role_k17000_v3` and broader role categories |
+| `individual_user_skill_lookup` | skill code | `skill_k35000` plus broader skill categories down to `skill_k15` |
+| `postings_cosmos` | job posting | `job_id`, `company`, `country`, `post_date`, `remove_date`, `rcid`, `role_k1500_v2`, `role_k17000_v3`, `salary`, `salary_min`, `salary_max`, `salary_predicted`, source flags |
+| `sentiment_individual_reviews` | review | `review_id`, `rcid`, `company`, `country`, `review_date`, ratings, raw review text fields |
+| `sentiment_scores` | company score | `rcid`, `company`, topic sentiment scores, `num_reviews` |
+| `workforce_dynamics_geo` | company-month geography | `rcid`, `country`, `state`, `metro_area`, `datemonth`, `seniority`, `role_k10`, count/inflow/outflow fields, salary, duration |
+| `layoffs` | WARN notice | `rcid`, `company`, `state`, `city`, `layoff_date`, `notice_date`, `num_employees`, layoff type fields |
+
+Taxonomy notes:
+
+- April 2026 skills taxonomy: `skill_mapped` was replaced by `skill_k35000`, expanding from about 3,000 to more than 30,000 distinct skills.
+- Join `individual_user_skills` to `individual_user_skill_lookup` on `skill_k35000` to map to broader skill categories up to `skill_k15`.
+- Newer role fields use versioned names such as `role_k1500_v2` and `role_k17000_v3`; the most granular role category can be used to join to `individual_role_lookup_v3`.
+- Fields containing `kN` are Revelio-created cluster categories; raw-text fields live in `_raw` tables and are much larger.
 
 Sensitive fields and QA:
 

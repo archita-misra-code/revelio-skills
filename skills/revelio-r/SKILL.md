@@ -14,7 +14,7 @@ description: Use when working with Revelio Labs data in R: WRDS/Postgres access,
 
 ## Quick Start
 
-Use `scripts/wrds_connection_template.R` for WRDS connections and `scripts/load_revelio_extracts.R` for local extract loading patterns. Read `references/schema.md` when selecting columns or joining tables.
+Use `scripts/wrds_connection_template.R` for WRDS connections and `scripts/load_revelio_extracts.R` for local extract loading patterns. Read `references/schema.md` when selecting columns or joining tables. Read `references/products.md` when choosing among Individual, Job Postings, Sentiment, Layoffs, or Workforce Dynamics products.
 
 Preferred R stack:
 
@@ -45,7 +45,7 @@ library(ggplot2)
 - Deduplicate using stable keys such as `user_id`, `position_id`, and spell dates.
 - For career histories, arrange by `user_id`, `startdate`, `enddate`, and `position_number`.
 - Treat overlapping jobs explicitly; do not silently impose one job per person-month.
-- For skills, keep both reported/predicted provenance (`skill_source`) and mapped/raw skill fields.
+- For skills, keep both reported/predicted provenance (`skill_source`) and raw/translated/mapped fields. As of the April 2026 taxonomy update, use `skill_k35000` as the most granular mapped skill field and join to `individual_user_skill_lookup` on `skill_k35000`.
 
 ## Analysis Standards
 
@@ -61,6 +61,10 @@ library(ggplot2)
 - `revelio.individual_user_education`
 - `revelio.individual_user_skills`
 - `revelio.company_mapping`
-- `revelio.individual_role_lookup`
+- `revelio.individual_role_lookup_v3`
 - `revelio.individual_user_skill_lookup`
-
+- `revelio.postings_cosmos`
+- `revelio.sentiment_individual_reviews`
+- `revelio.sentiment_scores`
+- `revelio.workforce_dynamics_geo`
+- `revelio.layoffs`
