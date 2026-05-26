@@ -17,8 +17,11 @@ Core tables:
 | Table | Grain | Common columns |
 |---|---|---|
 | `individual_user` | user | `user_id`, `user_country`, `highest_degree`, `sex_predicted`, `f_prob`, `m_prob`, `updated_dt` |
+| `individual_user_raw` | user raw text | `user_id` plus raw profile text fields such as title/summary; use only when text analysis or manual QA requires it |
 | `individual_positions` | job spell | `user_id`, `position_id`, `rcid`, `country`, `region`, `state`, `metro_area`, `city`, `startdate`, `enddate`, `role_k1500_v2`, `role_k17000_v3`, `onet_code`, `seniority`, `salary`, `position_number`, `company`, `ultimate_parent_company_name` |
+| `individual_positions_raw` | position raw text | `user_id`, `position_id` plus raw position text such as descriptions; large table, Postgres preferred |
 | `individual_user_education` | education spell | `user_id`, `rsid`, `university_name`, `university_country`, `degree`, `field`, `startdate`, `enddate` |
+| `individual_user_education_raw` | education raw text | `user_id`, education spell identifiers, and raw education text fields; useful for spot-checking mapped school/degree/field |
 | `individual_user_skills` | user-skill | `user_id`, `skill_raw`, `skill_translated`, `skill_source`, `first_reported`, `skill_k35000` |
 | `company_mapping` | company/subsidiary | `rcid`, `company`, `ultimate_parent_rcid`, `ultimate_parent_company_name`, `naics_code`, `hq_country`, `hq_region`, `rics_k50`, `rics_k200`, `rics_k400` |
 | `individual_role_lookup_v3` | role code | role clusters including `role_k17000_v3` and broader role categories |
@@ -35,6 +38,7 @@ Taxonomy notes:
 - Join `individual_user_skills` to `individual_user_skill_lookup` on `skill_k35000` to map to broader skill categories up to `skill_k15`.
 - Newer role fields use versioned names such as `role_k1500_v2` and `role_k17000_v3`; the most granular role category can be used to join to `individual_role_lookup_v3`.
 - Fields containing `kN` are Revelio-created cluster categories; raw-text fields live in `_raw` tables and are much larger.
+- Raw individual tables are callable directly by table name, e.g. `revelio.individual_user_education_raw`. Join raw education back to mapped education by `user_id` plus available education spell identifiers/date fields; check the WRDS table dictionary for exact columns before assuming a key.
 
 Sensitive fields and QA:
 
