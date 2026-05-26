@@ -6,6 +6,8 @@ Use this reference to choose the right Revelio WRDS product/table before queryin
 
 - Revelio is a monthly-updated workforce database built from public professional profiles, job postings, and employee sentiment reviews.
 - WRDS does not retain prior monthly snapshots for most products.
+- Revelio Labs does not have an official LinkedIn partnership; individual data availability is limited to public portions of profiles visible without logging in at collection time.
+- Deleted/private profiles can remain in Revelio if they were once public. Use `individual_user.updated_dt` as a freshness diagnostic; records more than roughly three months stale are more likely to be profiles that are no longer publicly scrapeable.
 - Coverage is global but depends on user-generated source availability.
 - Standardized fields are much smaller and easier to query than raw text fields.
 - Some raw fields, especially job descriptions, are available only on WRDS Postgres.
@@ -59,6 +61,9 @@ April 2026 update:
 - Key fields include `job_id`, `company`, `country`, `role_k1500_v2`, `role_k17000_v3`, `salary`, `salary_min`, `salary_max`, `salary_predicted`, `post_date`, `remove_date`, `rcid`, `ultimate_parent_rcid`, `remote_type`, `expected_hires`, and source flags.
 - Some postings have no RCID.
 - Raw postings text is in `postings_cosmos_raw`, joined by `job_id`, and can be very large.
+- `postings_cosmos_raw` is Postgres-only and includes `job_id`, `description`, `title_raw`, `jobtitle_translated`, and `location_raw`.
+- Use `postings_role_lookup_v3` for COSMOS v3 role categories, including `role_k17000_v3`, `role_k1500_v3`, `role_k150_v3`, `role_k50_v3`, `role_k10_v3`, and O*NET fields.
+- WRDS moved from separate LinkedIn and aggregator postings feeds to consolidated COSMOS in June 2025. To approximate old feeds, filter COSMOS with `source_linkedin = 1` for LinkedIn-sourced postings, or `source_regional_aggregators = 1 OR source_other_aggregators = 1` for aggregator-sourced postings.
 
 ## Sentiment
 
@@ -70,6 +75,8 @@ Tables:
 - `sentiment_scores`: aggregate company-level sentiment scores by topic with `num_reviews`.
 
 Only select raw text fields such as `review_summary`, `review_advice`, `review_pros`, and `review_cons` when doing text analysis.
+
+SAS size limits can cause a tiny share of raw review text records to be missing from SAS-backed individual review tables; use Postgres for raw text work when possible.
 
 ## Workforce Dynamics
 
@@ -86,4 +93,3 @@ Only select raw text fields such as `review_summary`, `review_advice`, `review_p
 - WARN notices connected to Revelio company identifiers.
 - Mostly useful for US-focused analysis.
 - Key fields include company, RCID, state/city, notice and layoff dates, number of employees, and layoff type fields.
-

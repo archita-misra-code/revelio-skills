@@ -27,6 +27,8 @@ Core tables:
 | `individual_role_lookup_v3` | role code | role clusters including `role_k17000_v3` and broader role categories |
 | `individual_user_skill_lookup` | skill code | `skill_k35000` plus broader skill categories down to `skill_k15` |
 | `postings_cosmos` | job posting | `job_id`, `company`, `country`, `post_date`, `remove_date`, `rcid`, `role_k1500_v2`, `role_k17000_v3`, `salary`, `salary_min`, `salary_max`, `salary_predicted`, source flags |
+| `postings_cosmos_raw` | job posting raw text | `job_id`, `description`, `title_raw`, `jobtitle_translated`, `location_raw`; Postgres-only and very large |
+| `postings_role_lookup_v3` | postings role code | `role_k17000_v3`, `role_k1500_v3`, `role_k150_v3`, `role_k50_v3`, `role_k10_v3`, `onet_code`, `onet_title` |
 | `sentiment_individual_reviews` | review | `review_id`, `rcid`, `company`, `country`, `review_date`, ratings, raw review text fields |
 | `sentiment_scores` | company score | `rcid`, `company`, topic sentiment scores, `num_reviews` |
 | `workforce_dynamics_geo` | company-month geography | `rcid`, `country`, `state`, `metro_area`, `datemonth`, `seniority`, `role_k10`, count/inflow/outflow fields, salary, duration |
@@ -39,6 +41,7 @@ Taxonomy notes:
 - Newer role fields use versioned names such as `role_k1500_v2` and `role_k17000_v3`; the most granular role category can be used to join to `individual_role_lookup_v3`.
 - Fields containing `kN` are Revelio-created cluster categories; raw-text fields live in `_raw` tables and are much larger.
 - Raw individual tables are callable directly by table name, e.g. `revelio.individual_user_education_raw`. Join raw education back to mapped education by `user_id` plus available education spell identifiers/date fields; check the WRDS table dictionary for exact columns before assuming a key.
+- For COSMOS postings, join `postings_cosmos_raw` to `postings_cosmos` by `job_id`; filter the base table first because both tables are huge.
 
 Sensitive fields and QA:
 

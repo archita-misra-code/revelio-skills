@@ -14,7 +14,7 @@ description: Use when working with Revelio Labs data in Python: WRDS/Postgres ac
 
 ## Quick Start
 
-Use `scripts/wrds_connection_template.py` for WRDS connections and `scripts/load_revelio_extracts.py` for local extract loading patterns. Read `references/schema.md` when selecting columns or joining tables. Read `references/products.md` when choosing among Individual, Job Postings, Sentiment, Layoffs, or Workforce Dynamics products.
+Use `scripts/wrds_connection_template.py` for WRDS connections and `scripts/load_revelio_extracts.py` for local extract loading patterns. Read `references/schema.md` when selecting columns or joining tables. Read `references/products.md` when choosing among Individual, Job Postings, Sentiment, Layoffs, or Workforce Dynamics products. Read `references/wrds_access.md` for WRDS Postgres schema/view conventions and raw-text table access.
 
 Preferred Python stack:
 
