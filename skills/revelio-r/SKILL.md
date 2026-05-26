@@ -14,7 +14,7 @@ description: Use when working with Revelio Labs data in R: WRDS/Postgres access,
 
 ## Quick Start
 
-Use `scripts/wrds_connection_template.R` for WRDS connections and `scripts/load_revelio_extracts.R` for local extract loading patterns. Read `references/schema.md` when selecting columns or joining tables. Read `references/products.md` when choosing among Individual, Job Postings, Sentiment, Layoffs, or Workforce Dynamics products. Read `references/wrds_access.md` for WRDS Postgres schema/view conventions and raw-text table access.
+Use `scripts/wrds_connection_template.R` for WRDS connections and `scripts/load_revelio_extracts.R` for local extract loading patterns. Read `references/codebook.md` when variable-level detail matters. Read `references/analysis_workflows.md` before cleaning, mobility, geography, quality-filter, or Morocco-style analysis. Read `references/diaspora_capability.md` before diaspora, returnee, capability, university-pipeline, or abroad/Morocco mobility work. Read `references/schema.md` when selecting columns or joining tables. Read `references/products.md` when choosing among Individual, Job Postings, Sentiment, Layoffs, or Workforce Dynamics products. Read `references/wrds_access.md` for WRDS Postgres schema/view conventions and raw-text table access.
 
 Preferred R stack:
 
